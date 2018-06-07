@@ -27,8 +27,13 @@ function getTypes() {
   return JSON.parse(str)
 }
 
-let storage = {
-  set: function (key, value, dataType) {
+
+class Storage {
+  constructor ({appId} = {}) {
+    this.appId = appId || Math.random()
+  }
+
+  set (key, value, dataType) {
     if (window.localStorage == null) return console.error('localStorage not supported')
     let str = localStorage.getItem(directory)
     let obj
@@ -39,8 +44,9 @@ let storage = {
     types[key] = dataType
     localStorage.setItem(directory + '_type', JSON.stringify(types))
     this.emit('change')
-  },
-  get: function (key) {
+  }
+
+  get (key) {
     if (window.localStorage == null) return console.error('localStorage not supported')
     let str = localStorage.getItem(directory)
     let obj
@@ -49,8 +55,9 @@ let storage = {
       data: obj[key],
       dataType: getType(key)
     }
-  },
-  remove: function (key) {
+  }
+
+  remove (key) {
     if (window.localStorage == null) return console.error('localStorage not supported')
     let str = localStorage.getItem(directory)
     if (!str) return
@@ -63,14 +70,16 @@ let storage = {
     localStorage.setItem(directory + '_type', JSON.stringify(types))
     this.emit('change')
     return data
-  },
-  clear: function () {
+  }
+
+  clear () {
     if (window.localStorage == null) return console.error('localStorage not supported')
     localStorage.removeItem(directory)
     localStorage.removeItem(directory + '_type')
     this.emit('change')
-  },
-  getAll: function () {
+  }
+  
+  getAll () {
     if (window.localStorage == null) return console.error('localStorage not supported')
     let str = localStorage.getItem(directory)
     let obj = str ? JSON.parse(str) : {}
@@ -82,8 +91,9 @@ let storage = {
       }
     })
     return res
-  },
-  info: function () {
+  }
+
+  info () {
     if (window.localStorage == null) return console.error('localStorage not supported')
     let str = localStorage.getItem(directory)
     let obj = str ? JSON.parse(str) : {}
@@ -94,5 +104,3 @@ let storage = {
     }
   }
 }
-
-export default storage
