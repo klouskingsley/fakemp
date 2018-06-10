@@ -1,5 +1,5 @@
 /*!
-* fakemp.umd.js v0.0.1
+* fakemp.umd.js v0.1.0
 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -242,16 +242,16 @@
       registerStorage(this);
     }
 
-    createClass(FakeMP, null, [{
-      key: 'createFakeMp',
-      value: function createFakeMp(opt) {
+    createClass(FakeMP, [{
+      key: 'createInstance',
+      value: function createInstance(opt) {
         return new FakeMP(opt);
       }
     }]);
     return FakeMP;
   }();
 
-  var index = FakeMP.createFakeMp();
+  var index = new FakeMP();
 
   return index;
 

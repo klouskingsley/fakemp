@@ -1,6 +1,6 @@
 {
   "name": "fakemp",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "wechat mini program api mock, used for test",
   "main": "dist/fakemp.cjs.js",
   "module": "src/index.js",

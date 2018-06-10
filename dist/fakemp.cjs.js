@@ -1,5 +1,5 @@
 /*!
-* fakemp.cjs.js v0.0.1
+* fakemp.cjs.js v0.1.0
 */
 'use strict';
 
@@ -210,15 +210,15 @@ var FakeMP = function () {
     registerStorage(this);
   }
 
-  createClass(FakeMP, null, [{
-    key: 'createFakeMp',
-    value: function createFakeMp(opt) {
+  createClass(FakeMP, [{
+    key: 'createInstance',
+    value: function createInstance(opt) {
       return new FakeMP(opt);
     }
   }]);
   return FakeMP;
 }();
 
-var index = FakeMP.createFakeMp();
+var index = new FakeMP();
 
 module.exports = index;

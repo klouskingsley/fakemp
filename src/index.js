@@ -6,9 +6,9 @@ class FakeMP {
     registerStorage(this)
   }
 
-  static createFakeMp (opt) {
+  createInstance (opt) {
     return new FakeMP(opt)
   }
 }
 
-export default FakeMP.createFakeMp()
+export default new FakeMP()

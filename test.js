@@ -92,3 +92,12 @@ describe('async storage', function () {
     })
   })
 })
+
+describe('createInstance', function () {
+  it('createInstance return fakemp instance', function () {
+    var appId = 'xxxxxxxxxx'
+    var wx = fakemp.createInstance({appId: appId})
+    assert(wx.contructor === fakemp.contructor)
+    assert(wx.appId === appId)
+  })
+})
