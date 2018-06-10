@@ -1,4 +1,4 @@
-# fakemp [![Build Status](https://travis-ci.org/klouskingsley/fakemp.svg?branch=master)](https://travis-ci.org/klouskingsley/fakemp
+# fakemp ![Build Status](https://travis-ci.org/klouskingsley/fakemp.svg?branch=master)
 > 使用浏览器模拟微信小程序Api, 现仅支持[Storage](https://developers.weixin.qq.com/miniprogram/dev/api/data.html)
 
 ## Install
