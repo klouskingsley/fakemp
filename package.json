@@ -14,5 +14,8 @@
     "weapp"
   ],
   "author": "klouskingsley",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "invariant": "^2.2.4"
+  }
 }
