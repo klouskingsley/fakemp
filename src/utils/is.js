@@ -4,4 +4,4 @@ var is = {
   }
 }
 
-return is
+export default is
