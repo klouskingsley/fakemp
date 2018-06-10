@@ -27,8 +27,8 @@ wx.getStorageSync('foo')  // bar
 ###### options
 - Type: `object`
 
---- | --- | ---
 name | description | default
+--- | --- | ---
 appId | 小程序的appId, 用于隔离不同的storage | Math.random()
 
 
