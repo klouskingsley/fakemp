@@ -9,7 +9,7 @@ module.exports = function (config) {
     ],
     port: 9876,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     concurrency: 1,
     browserDisconnectTimeout: 6000,
     processKillTimeout: 6000,
