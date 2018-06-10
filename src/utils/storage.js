@@ -17,7 +17,7 @@ function currentSize() {
 class Storage {
   constructor ({appId} = {}) {
     this.appId = appId || Math.random()
-    invariant(localStorage === null, 'localStorage not supported')
+    invariant(typeof localStorage === 'object', 'localStorage not supported')
   }
 
   set (key, value) {
@@ -32,9 +32,7 @@ class Storage {
     let str = localStorage.getItem(this.appId)
     let obj
     obj = str ? JSON.parse(str) : {}
-    return {
-      data: obj[key]
-    }
+    return obj[key]
   }
 
   remove (key) {

@@ -2,18 +2,19 @@ import babel from 'rollup-plugin-babel'
 import pkg from './package.json'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import replace from 'rollup-plugin-replace';
 
 const banner = format => `/*!
-* wecache.${format}.js v${pkg.version}
+* fakemp.${format}.js v${pkg.version}
 */`
 
 export default [
   {
     input: 'src/index.js',
     output: {
-      file: 'dist/wecache.umd.js',
+      file: 'dist/fakemp.umd.js',
       format: 'umd',
-      name: 'wecache',
+      name: 'fakemp',
       banner: banner('umd')
     },
     plugins: [
@@ -23,6 +24,9 @@ export default [
         extensions: ['.js', '.json']
       }),
       commonjs(),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      }),
       babel({
         exclude: 'node_modules/**'
       })
@@ -31,7 +35,7 @@ export default [
   {
     input: 'src/index.js',
     output: {
-      file: 'dist/wecache.cjs.js',
+      file: 'dist/fakemp.cjs.js',
       format: 'cjs',
       banner: banner('cjs')
     },

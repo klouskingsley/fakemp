@@ -1,11 +1,17 @@
 /*!
-* wecache.cjs.js v0.0.1
+* fakemp.cjs.js v0.0.1
 */
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var invariant = _interopDefault(require('invariant'));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -67,7 +73,7 @@ var Storage = function () {
     classCallCheck(this, Storage);
 
     this.appId = appId || Math.random();
-    invariant(localStorage === null, 'localStorage not supported');
+    invariant((typeof localStorage === 'undefined' ? 'undefined' : _typeof(localStorage)) === 'object', 'localStorage not supported');
   }
 
   createClass(Storage, [{
@@ -85,9 +91,7 @@ var Storage = function () {
       var str = localStorage.getItem(this.appId);
       var obj = void 0;
       obj = str ? JSON.parse(str) : {};
-      return {
-        data: obj[key]
-      };
+      return obj[key];
     }
   }, {
     key: 'remove',
@@ -140,7 +144,7 @@ var is = {
 };
 
 function registerStorage(fakemp) {
-  var storage = new storageUtil({ appId: fakemp.appId });
+  var storage = new Storage({ appId: fakemp.appId });
 
   fakemp.setStorage = function (obj) {
     var res = storage.set(obj.key, obj.data);
@@ -165,7 +169,10 @@ function registerStorage(fakemp) {
   };
 
   fakemp.clearStorage = function () {
-    return storage.clear();
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var res = storage.clear();
+    returnSuccess(_extends({}, obj, { errMsg: 'clearStorage:ok', data: res }));
   };
 
   fakemp.setStorageSync = function (key, data) {
@@ -189,9 +196,9 @@ function registerStorage(fakemp) {
   };
 }
 
-function returnSuccess(obj, res) {
-  is.func(obj.success) && obj.success(res);
-  is.func(obj.complete) && obj.complete(res);
+function returnSuccess(obj) {
+  is.func(obj.success) && obj.success({ errMsg: obj.errMsg, data: obj.data });
+  is.func(obj.complete) && obj.complete({ errMsg: obj.errMsg, data: obj.data });
 }
 
 var FakeMP = function () {

@@ -1,10 +1,10 @@
 /*!
-* wecache.umd.js v0.0.1
+* fakemp.umd.js v0.0.1
 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.wecache = factory());
+  (global.fakemp = factory());
 }(this, (function () { 'use strict';
 
   /**
@@ -14,25 +14,7 @@
    * LICENSE file in the root directory of this source tree.
    */
 
-  /**
-   * Use invariant() to assert state which your program assumes to be true.
-   *
-   * Provide sprintf-style format (only %s is supported) and arguments
-   * to provide information about what broke and what you were
-   * expecting.
-   *
-   * The invariant message will be stripped in production, but the invariant
-   * will remain to ensure logic does not differ in production.
-   */
-
-  var NODE_ENV = process.env.NODE_ENV;
-
   var invariant = function(condition, format, a, b, c, d, e, f) {
-    if (NODE_ENV !== 'production') {
-      if (format === undefined) {
-        throw new Error('invariant requires an error message argument');
-      }
-    }
 
     if (!condition) {
       var error;
@@ -56,6 +38,12 @@
   };
 
   var invariant_1 = invariant;
+
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  };
 
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -117,7 +105,7 @@
       classCallCheck(this, Storage);
 
       this.appId = appId || Math.random();
-      invariant_1(localStorage === null, 'localStorage not supported');
+      invariant_1((typeof localStorage === 'undefined' ? 'undefined' : _typeof(localStorage)) === 'object', 'localStorage not supported');
     }
 
     createClass(Storage, [{
@@ -135,9 +123,7 @@
         var str = localStorage.getItem(this.appId);
         var obj = void 0;
         obj = str ? JSON.parse(str) : {};
-        return {
-          data: obj[key]
-        };
+        return obj[key];
       }
     }, {
       key: 'remove',
@@ -190,7 +176,7 @@
   };
 
   function registerStorage(fakemp) {
-    var storage = new storageUtil({ appId: fakemp.appId });
+    var storage = new Storage({ appId: fakemp.appId });
 
     fakemp.setStorage = function (obj) {
       var res = storage.set(obj.key, obj.data);
@@ -215,7 +201,10 @@
     };
 
     fakemp.clearStorage = function () {
-      return storage.clear();
+      var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      var res = storage.clear();
+      returnSuccess(_extends({}, obj, { errMsg: 'clearStorage:ok', data: res }));
     };
 
     fakemp.setStorageSync = function (key, data) {
@@ -239,9 +228,9 @@
     };
   }
 
-  function returnSuccess(obj, res) {
-    is.func(obj.success) && obj.success(res);
-    is.func(obj.complete) && obj.complete(res);
+  function returnSuccess(obj) {
+    is.func(obj.success) && obj.success({ errMsg: obj.errMsg, data: obj.data });
+    is.func(obj.complete) && obj.complete({ errMsg: obj.errMsg, data: obj.data });
   }
 
   var FakeMP = function () {

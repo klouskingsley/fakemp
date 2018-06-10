@@ -2,7 +2,7 @@ import StorageUtil from '../utils/storage'
 import is from '../utils/is'
 
 export default function registerStorage (fakemp) {
-  var storage = new storageUtil({appId: fakemp.appId})
+  var storage = new StorageUtil({appId: fakemp.appId})
 
   fakemp.setStorage = function (obj) {
     const res = storage.set(obj.key, obj.data)
@@ -24,8 +24,9 @@ export default function registerStorage (fakemp) {
     returnSuccess({...obj, errMsg: 'removeStorage:ok', data: res})
   }
 
-  fakemp.clearStorage = function () {
-    return storage.clear()
+  fakemp.clearStorage = function (obj = {}) {
+    const res = storage.clear()
+    returnSuccess({...obj, errMsg: 'clearStorage:ok', data: res})
   }
 
   fakemp.setStorageSync = function (key, data) {
@@ -50,7 +51,7 @@ export default function registerStorage (fakemp) {
 
 }
 
-function returnSuccess (obj, res) {
-  is.func(obj.success) && obj.success(res)
-  is.func(obj.complete) && obj.complete(res)
+function returnSuccess (obj) {
+  is.func(obj.success) && obj.success({errMsg: obj.errMsg, data: obj.data})
+  is.func(obj.complete) && obj.complete({errMsg: obj.errMsg, data: obj.data})
 }
