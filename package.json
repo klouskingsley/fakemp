@@ -1,6 +1,6 @@
 {
   "name": "fakemp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "wechat mini program api mock, used for test",
   "main": "dist/fakemp.cjs.js",
   "module": "src/index.js",
@@ -15,6 +15,14 @@
     "wxapp",
     "weapp"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klouskingsley/fakemp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/klouskingsley/fakemp/issues"
+  },
+  "homepage": "https://github.com/klouskingsley/fakemp#readme",
   "author": "klouskingsley",
   "license": "MIT",
   "dependencies": {
